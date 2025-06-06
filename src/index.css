@@ -8,10 +8,15 @@
   --primary-nav-foreground: #ffffff;
   --link: #007bff;
 
-  --card-background: #e4e4e4;
-  --card-hover: #d0d0d0;
+  /* --card-background: #e4e4e4; */
+  --card-background: #eaecef;
+  /* --card-hover: #d0d0d0; */
+  --card-hover: #dedfe4;
 
   --primary-border: #e4e4e4;
+  
+  --popover-background: #fff;
+  --color-icon-primary: #3a4655;
 
   --shadow-table-frozen-left: -4px 0 4px -4px rgba(0, 0, 0, 0.3) inset;
   --shadow-table-frozen-right: 4px 0 4px -4px rgba(0, 0, 0, 0.3) inset;
@@ -41,6 +46,9 @@
   --color-link: var(--link);
 
   --color-primary-border: var(--primary-border);
+
+  /* popover */
+  --color-popover-background: var(--popover-background);
 
   /** text **/
   --text-prop: 13px;

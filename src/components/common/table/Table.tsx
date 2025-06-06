@@ -6,6 +6,7 @@ import TableBody from './TableBody';
 import type { SavedColumnConfig, TableProps } from '@/types/table';
 import storage from '@/utils/storage';
 import { getCurrentColumns } from './table-customizer-helper';
+import ColumnCustomizer from './utils-components/ColumnCustomizer';
 
 
 
@@ -66,9 +67,7 @@ const Table = <T,>({ tableColumnConfigs, allFormFields, data }: TableProps<T>) =
 
     return (
         <div className='relative'>
-            <div className='absolute right-0 z-10 w-9 h-9 top-2 flex items-center justify-center shadow-md bg-card-background rounded'>
-                SE
-            </div>
+            <ColumnCustomizer allColumnMap={allColumnsMap} selectedColumns={currentColumnsToRender}/>
             <div className='overflow-y-auto overflow-x-auto'>
                 <table className='w-full table-fixed'>
                     <TableHeader tableInstance={tableInstance} />

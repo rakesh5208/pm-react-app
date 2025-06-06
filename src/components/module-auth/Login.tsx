@@ -1,6 +1,7 @@
 import type { FormEvent } from "react";
 import { useSessionStore } from "@/stores/session"
 import { useNavigate } from "react-router";
+import Button  from '@/components/common/Button';
 
 const Login = () => {
   const { login, isLoginRequested } = useSessionStore();
@@ -24,9 +25,9 @@ const Login = () => {
                 </div>
             </div>
             <div className="flex justify-end">
-                <button type="submit" className={`flex-1 bg-primary-nav-background text-primary-nav-foreground hover:bg-primary-nav-hover-background rounded p-1 cursor-pointer ${isLoginRequested && 'opacity-60'}`}>
+                <Button type="submit" className={`flex-1 bg-primary-nav-background text-primary-nav-foreground hover:bg-primary-nav-hover-background rounded p-1 cursor-pointer ${isLoginRequested && 'opacity-60'}`}>
                     { isLoginRequested ? 'Submitted...': 'Login' }
-                </button>
+                </Button>
             </div>
         </form>
     </div>

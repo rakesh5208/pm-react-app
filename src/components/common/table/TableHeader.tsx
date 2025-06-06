@@ -10,7 +10,7 @@ const TableHeader = <T,>({ tableInstance }: TableHeaderProps<T>) => {
                     <tr key={headerGroups.id} className='border-b border-primary-border'>
                         {
                             headerGroups.headers.map((header) => {
-                                return (<th key={header.id} style={{...getColumnPinnedStyle<T>(header.column)}} className='text-left py-3 px-2 bg-page-background text-nowrap overflow-hidden text-ellipsis'>
+                                return (<th key={header.id} style={{...getColumnPinnedStyle<T>(header.column)}} className='text-left py-3 px-2 bg-page-background text-nowrap overflow-hidden text-ellipsis font-medium'>
                                     {
                                         header.isPlaceholder
                                             ? null

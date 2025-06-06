@@ -1,4 +1,5 @@
 import { useCurrentAccountStore } from "@/stores/current-account";
+import Button from "@/components/common/Button";
 
 const AccountDetails = () => {
   const { currentAccount } = useCurrentAccountStore();
@@ -38,7 +39,7 @@ const AccountDetails = () => {
         <section>
             <h2 className="text-lg font-semibold pb-2 border-b border-card-background border-dashed"></h2>
             <div className="gap-3 py-4 rounded-md grid sm:grid-cols-3">
-                <button type="button">Delete Account </button>
+                <Button type="button">Delete Account </Button>
             </div>
         </section>
     </div>

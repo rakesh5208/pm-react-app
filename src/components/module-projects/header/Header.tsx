@@ -1,8 +1,8 @@
 import ProtectedElement from "@/components/common/ProtectedElement";
-
+import Button from "@/components/common/Button";
 const Header = () => {
   return (
-    <div className="p-4 flex">
+    <div className="py-4 flex">
       {/* left header actions */}
       <ul className="flex-1 flex gap-3">
         <li>
@@ -10,7 +10,7 @@ const Header = () => {
         </li>
         <ProtectedElement permission="create:project" >
           <li>
-            <button type="button">+New Project</button>
+            <Button type="button">+New Project</Button>
           </li>
         </ProtectedElement>
       </ul>
@@ -19,15 +19,15 @@ const Header = () => {
       <ul className="flex gap-3">
         <ProtectedElement permission="create:project" >
           <li>
-            <button type="button">Templates</button>
+            <Button type="button">Templates</Button>
           </li>
         </ProtectedElement>
         <li>
-          <button type="button">Filter</button>
+          <Button type="button">Filter</Button>
         </li>
         <ProtectedElement permission="create:project" >
           <li>
-            <button type="button">Export</button>
+            <Button type="button">Export</Button>
           </li>
         </ProtectedElement>
       </ul>
