@@ -1,0 +1,71 @@
+{
+    "account": {
+        "id": "67890",
+        "name": "Example Corp",
+        "subscription": {
+            "type": "premium",
+            "status": "active",
+            "expiryDate": "2024-12-31"
+        },
+        "settings": {
+            "timezone": "india/kolkata",
+            "currency": "USD",
+            "timeFormat": "24-hour",
+            "dateFormat": "DD/MM/YYYY",
+            "branding": {
+                "logoUrl": "https://example.com/logo.png",
+                "colorScheme": "#123456"
+            }
+        },
+        "features": [
+            "branding_customization",
+            "audit_logs",
+            "analytics",
+            "apiAccess"
+        ],
+        "integrations": [
+            {
+                "id": "12345",
+                "name": "slack",
+                "enabled": true
+            },
+            {
+                "id": "67890",
+                "name": "github",
+                "enabled": true
+            },
+            {
+                "id": "11223",
+                "name": "jira",
+                "enabled": false
+            },
+            {
+                "id": "11224",
+                "name": "gitlab",
+                "enabled": false
+            }
+        ]
+    },
+    "user": {
+        "id": "12345",
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "isActive": true,
+        "createdAt": "2023-10-01T12:00:00Z",
+        "updatedAt": "2023-10-15T12:00:00Z",
+        "avatarUrl": "https://example.com/avatar.jpg",
+        "permissions": [
+            "create:project",
+            "view:project",
+            "edit:project",
+            "delete:project",
+            "manage:admin_settings"
+        ],
+        "preferences": {
+            "theme": "dark",
+            "language": "en",
+            "notifications": true,
+            "timezone": "india/kolkata"
+        }
+    }
+}

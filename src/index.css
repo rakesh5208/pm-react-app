@@ -1,0 +1,51 @@
+@import "tailwindcss";
+:root {
+  --page-background: #fdfdfd;
+  --page-foreground: #121212;
+  --page-secondary-foreground: #515151;
+
+  --primary-nav-background: #007a55;
+  --primary-nav-foreground: #ffffff;
+  --link: #007bff;
+
+  --card-background: #e4e4e4;
+  --card-hover: #d0d0d0;
+
+  --primary-border: #e4e4e4;
+
+  --shadow-table-frozen-left: -4px 0 4px -4px rgba(0, 0, 0, 0.3) inset;
+  --shadow-table-frozen-right: 4px 0 4px -4px rgba(0, 0, 0, 0.3) inset;
+
+}
+@layer {
+  body {
+    background-color: var(--page-background);
+    color: var(--page-foreground);
+    font-size: 14px;
+  }
+}
+@theme {
+  --color-*: initial;
+  
+  --color-page-background: var(--page-background);
+  --color-page-foreground: var(--page-foreground);
+  --color-page-secondary-foreground: var(--page-secondary-foreground);
+  
+  --color-primary-nav-background: var(--primary-nav-background);
+  --color-primary-nav-foreground: var(--primary-nav-foreground);
+  --color-primary-nav-hover-background: rgba(0, 0, 0, 0.3);
+  --color-primary-nav-active-background: rgba(0, 0, 0, 0.3);
+
+  --color-card-background: var(--card-background);
+  --color-card-hover: var(--card-hover);
+  --color-link: var(--link);
+
+  --color-primary-border: var(--primary-border);
+
+  /** text **/
+  --text-prop: 13px;
+
+  /** shadow */
+  /* --shadow-table-frozen-left: var(--shadow-table-frozen-left) */
+
+}
