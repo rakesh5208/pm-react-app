@@ -1,5 +1,5 @@
-import { getCoreRowModel, useReactTable, type ColumnPinningState } from '@tanstack/react-table';
-import { useMemo } from 'react'
+import { getCoreRowModel, useReactTable, type ColumnDef, type ColumnPinningState } from '@tanstack/react-table';
+import { useMemo, useState } from 'react'
 import { buildColumnDefs } from './table-helper';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
@@ -30,34 +30,37 @@ const Table = <T,>({ tableColumnConfigs, allFormFields, data }: TableProps<T>) =
         }
         return savedConfigs;
     }, [tableColumnConfigs]);
+
+    //saved config as state to update the columns, as, lockedColumnDefs and unlockedColumnDefs have dependency on this state
+    const [columnConfigs, setColumnConfigs] = useState<Array<SavedColumnConfig>>(savedColumnConfigs);
     
     // get all locked/pinned columnDefs 
-    const lockedColumnDefs = useMemo(() => {
-        const lockedCols = savedColumnConfigs.filter((col) => col.locked);
+    const frozenColumnDefs = useMemo(() => {
+        const lockedCols = columnConfigs.filter((col) => col.locked);
         return getCurrentColumns<T>(allColumnsMap, lockedCols)
-    }, [savedColumnConfigs, allColumnsMap]);
+    }, [columnConfigs, allColumnsMap]);
 
     // get all other columnDefs, apart from locked/pinned columns
-    const unlockedColumnDefs = useMemo(() => {
-        const unlockedCols = savedColumnConfigs.filter((col) => !col.locked);
+    const otherSelectedColumnDefs = useMemo(() => {
+        const unlockedCols = columnConfigs.filter((col) => !col.locked);
         return getCurrentColumns<T>(allColumnsMap, unlockedCols);
-    }, [savedColumnConfigs, allColumnsMap]);
+    }, [columnConfigs, allColumnsMap]);
 
 
     // get all the current columns to be render in the table
     const currentColumnsToRender = useMemo(() => {
-        return [...lockedColumnDefs, ...unlockedColumnDefs];
-    }, [lockedColumnDefs, unlockedColumnDefs]);
+        return [...frozenColumnDefs, ...otherSelectedColumnDefs];
+    }, [frozenColumnDefs, otherSelectedColumnDefs]);
 
     const pinnedColumns: ColumnPinningState = useMemo(() => {
         return {
-            left: lockedColumnDefs.map((col) => col.id || ''),
+            left: frozenColumnDefs.map((col) => col.id || ''),
             right: []
         }
-    }, [lockedColumnDefs]);
+    }, [frozenColumnDefs]);
 
     const tableInstance = useReactTable<T>({
-        columns: allAvailableColumns,
+        columns: currentColumnsToRender,
         data,
         getCoreRowModel: getCoreRowModel(),
         initialState:{
@@ -65,9 +68,51 @@ const Table = <T,>({ tableColumnConfigs, allFormFields, data }: TableProps<T>) =
         }
     });
 
+    const onColumnUpdate = ({ frozenColumns, otherSelectedColumns} : { frozenColumns: Array<ColumnDef<T>>, otherSelectedColumns: Array<ColumnDef<T>> }) => {
+        // here update the table column, and updated the pinnedColumns
+        // configs for frozenColumn
+        // need to update the logic, this operation is costly
+        const findName = (columnToFind: ColumnDef<T>) => {
+            return Object.entries(allColumnsMap).find(([, col]) => {
+                return col.id === columnToFind.id;
+            })
+        }
+        
+        let position = 0;
+        const frozenColumnConfig = frozenColumns.map((col: ColumnDef<T>) => {
+            const name = findName(col)?.[0] || '';
+            position = position + 1;
+            return {
+                name,
+                locked: true,
+                position
+            }
+        });
+
+        const otherColumnConfig = otherSelectedColumns.map((col: ColumnDef<T>) => {
+            const name = findName(col)?.[0] || '';
+            position = position + 1;
+            return {
+                name,
+                locked: false,
+                position
+            }
+        });
+
+        const config = [...frozenColumnConfig, ...otherColumnConfig]
+        setColumnConfigs(config);
+        //update the storage
+        storage.setItem(tableColumnConfigs.storageName, JSON.stringify(config));
+    }
+
     return (
         <div className='relative'>
-            <ColumnCustomizer allColumnMap={allColumnsMap} selectedColumns={currentColumnsToRender}/>
+            <ColumnCustomizer 
+                allColumns={allAvailableColumns}
+                frozenColumns = { frozenColumnDefs }
+                otherSelectedColumns={otherSelectedColumnDefs}
+                onUpdate={onColumnUpdate}
+            />
             <div className='overflow-y-auto overflow-x-auto'>
                 <table className='w-full table-fixed'>
                     <TableHeader tableInstance={tableInstance} />
