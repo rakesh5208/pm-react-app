@@ -1,5 +1,6 @@
 import ProtectedElement from "@/components/common/ProtectedElement";
 import Button from "@/components/common/Button";
+import { PlusIcon } from "lucide-react";
 const Header = () => {
   return (
     <div className="py-4 flex">
@@ -10,7 +11,10 @@ const Header = () => {
         </li>
         <ProtectedElement permission="create:project" >
           <li>
-            <Button type="button">+New Project</Button>
+            <Button type="button">
+              <PlusIcon className="w-4 h-4"/>
+              <span>New Project</span>
+            </Button>
           </li>
         </ProtectedElement>
       </ul>
@@ -23,11 +27,11 @@ const Header = () => {
           </li>
         </ProtectedElement>
         <li>
-          <Button type="button">Filter</Button>
+          <Button type="button" variant="secondary">Filter</Button>
         </li>
         <ProtectedElement permission="create:project" >
           <li>
-            <Button type="button">Export</Button>
+            <Button type="button" variant="secondary">Export</Button>
           </li>
         </ProtectedElement>
       </ul>

@@ -16,7 +16,7 @@ export type UiColumn = {
 
 export type ColumnDefaultConfig<T> = {
     name: string;
-    header: string;
+    header?: string;
     accessorKey?: string;
     accessorFn?: (props: T) => unknown
     cell?: (props: CellContext<T, unknown>) => React.ReactNode;

@@ -53,7 +53,6 @@ const config: TableColumnConfig<Project> = {
     defaultConfigs: [
         {
             name: 'name',
-            header: 'Name',
             accessorKey: 'name',
             width: 240,
             cell: ProjectNameCell

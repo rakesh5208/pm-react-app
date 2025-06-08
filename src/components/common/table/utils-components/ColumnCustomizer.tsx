@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../../Popover'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Settings as SettingIcon } from 'lucide-react';
+import { LockKeyholeIcon, LockKeyholeOpenIcon, Settings as SettingIcon } from 'lucide-react';
 import Button from '@/components/common/Button';
+import { Checkbox } from '../../Checkbox';
 
 type ColumnCustomizerField = {
     id: string;
@@ -75,6 +76,7 @@ const ColumnCustomizer = <T, >({ allColumns, frozenColumns, otherSelectedColumns
   }, [allColumns, frozenColumnIds, otherSelectedColumnIds, frozenFieldFromAllColumns, otherSelectedFieldFromAllColumns]);
 
   const onColSelectStateChange = (col: ColumnCustomizerField) => {
+    console.log('clicked >>', col)
     if(col.isSelected) {
         // remove if already selected
         // otherSelectedColumns.filter((field) => !field.id === col.id);
@@ -127,7 +129,7 @@ const ColumnCustomizer = <T, >({ allColumns, frozenColumns, otherSelectedColumns
                     <div className='max-h-[300px] flex gap-4'>
                         {/* Search and field list  */}
                         <div className='flex flex-col w-1/2 border-r border-primary-border'>
-                            <p>Add / Remove Columns</p>
+                            <p className='font-medium px-4 py-2'>Add / Remove Columns</p>
                             <div className='px-4 py-2'>
                                 <input type="text" placeholder='search column...' className='w-full'/>
                             </div>
@@ -135,8 +137,11 @@ const ColumnCustomizer = <T, >({ allColumns, frozenColumns, otherSelectedColumns
                                 {
                                     allCustomizerFields.map((col) => {
                                         return (
-                                            <li key={col.id} className='py-1 mt-1 rounded text-prop' onClick={ () => onColSelectStateChange(col)}>
-                                                {col.isColumnFreezed &&  'f' } {col.isSelected && 's'} {col.label}
+                                            <li key={col.id} className='py-1 mt-1 text-prop' onClick={ () => onColSelectStateChange(col)}>
+                                                <div className={`flex items-top gap-2 ${col.isColumnFreezed ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+                                                    <Checkbox checked={col.isSelected} disabled={col.isColumnFreezed} className='mt-0.5'/>
+                                                    <span className='align-top'>{col.label}</span>
+                                                </div>
                                             </li>
                                         )
                                     })
@@ -147,31 +152,38 @@ const ColumnCustomizer = <T, >({ allColumns, frozenColumns, otherSelectedColumns
                         {/* selected field list */}
                         <div className='w-1/2 flex flex-col'>
                             <p className='font-medium pr-4 py-2'>Reorder Columns</p>
-                            <ul className='overflow-y-auto flex-1 pr-4 pb-2'>
+                            <ol className='list-decimal overflow-y-auto flex-1 pr-4 pb-2'>
+                                {/* frozzen column list */}
                                 {
                                     frozenFieldFromAllColumns.map((col) => {
                                         return (
-                                            <li key={col.id} className='p-2 border border-primary-border mt-1 rounded text-prop' onClick={() => onFrozenStateChange(col)}>
-                                                {col.isColumnFreezed &&  'f' } {col.isSelected && 's'} {col.label}
+                                            <li key={col.id} className='p-2 border border-primary-border mt-1 rounded text-prop'>
+                                                <div className='flex items-top gap-1 '>
+                                                    <LockKeyholeIcon className='w-4 h-4 shrink-0 mt-0.5'/>
+                                                    <span>{col.label}</span>
+                                                    <LockKeyholeOpenIcon className='w-4 h-4 shrink-0'/>
+                                                </div>
                                             </li>
                                         )
                                     })
                                 }
+                                
+                                {/* reorderable columns */}
                                 {
                                     otherSelectedFieldFromAllColumns.map((col) => {
                                         return (
                                             <li key={col.id} className='p-2 border border-primary-border mt-1 rounded text-prop' onClick={() => onFrozenStateChange(col)}>
-                                               {col.isColumnFreezed &&  'f' } {col.isSelected && 's'} {col.label}
+                                                {col.label}
                                             </li>
                                         )
                                     })
                                 }
-                            </ul>
+                            </ol>
                         </div>
                     </div>
                     {/* action */}
                     <div className='flex justify-end gap-2 p-4 bg-card-background'>
-                       <Button type="button" onClick={ handleCancel }>Cancel</Button>
+                       <Button type="button" variant="secondary" onClick={ handleCancel }>Cancel</Button>
                        <Button type="button" onClick={ handleUpdate }>Update</Button>
                     </div>
                 </div>
