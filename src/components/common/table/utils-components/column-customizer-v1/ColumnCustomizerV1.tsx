@@ -154,7 +154,7 @@ const ColumnCustomizerV1 = <T,>({ allColumns, frozenColumns, otherSelectedColumn
                         </div>
                         <div className='max-h-[300px] flex gap-4'>
                             {/* Search and field list  */}
-                            <div className='flex flex-col w-1/2 border-r border-primary-border'>
+                            <div className='flex flex-col w-1/2 border-r border-primary-border py-2'>
                                 <div className='px-4 py-2'>
                                     <input type="text" placeholder='search column...' className='w-full' />
                                 </div>
@@ -175,7 +175,7 @@ const ColumnCustomizerV1 = <T,>({ allColumns, frozenColumns, otherSelectedColumn
 
                             </div>
                             {/* selected field list */}
-                            <div className='w-1/2 flex flex-col'>
+                            <div className='w-1/2 flex flex-col  py-2'>
                                 <div className='overflow-y-auto flex-1 pr-4 pb-2'>
                                     {/* frozzen column list */}
                                     {

@@ -11,7 +11,8 @@ export interface SavedColumnConfig {
 
 export type UiColumn = {
     name: string;
-    type: FieldType
+    type: FieldType;
+    label?:string; // first ColumnDefaultConfig.header will be priority, else this label will be used else name will be used for table column
 }
 
 export type ColumnDefaultConfig<T> = {

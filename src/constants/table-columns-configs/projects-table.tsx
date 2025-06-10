@@ -41,10 +41,12 @@ const config: TableColumnConfig<Project> = {
     uiMappedColumns: [
         {
             name: 'createdAt',
+            label: 'Created At',
             type: 'DATE_TIME'
         },
         {
             name: 'updatedAt',
+            label: 'Updated At',
             type: 'DATE_TIME'
         }
     ],
