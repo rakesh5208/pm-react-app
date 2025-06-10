@@ -108,19 +108,19 @@ const Table = <T,>({ tableColumnConfigs, allFormFields, data }: TableProps<T>) =
 
     return (
         <div className='relative'>
-            {/* <ColumnCustomizerV1 
-                allColumns={allAvailableColumns}
-                frozenColumns = { frozenColumnDefs }
-                otherSelectedColumns={otherSelectedColumnDefs}
-                onUpdate={onColumnUpdate}
-            /> */}
-
-            <ColumnCustomizer 
+            <ColumnCustomizerV1 
                 allColumns={allAvailableColumns}
                 frozenColumns = { frozenColumnDefs }
                 otherSelectedColumns={otherSelectedColumnDefs}
                 onUpdate={onColumnUpdate}
             />
+
+            {/* <ColumnCustomizer 
+                allColumns={allAvailableColumns}
+                frozenColumns = { frozenColumnDefs }
+                otherSelectedColumns={otherSelectedColumnDefs}
+                onUpdate={onColumnUpdate}
+            /> */}
             <div className='overflow-y-auto overflow-x-auto'>
                 <table className='w-full table-fixed'>
                     <TableHeader tableInstance={tableInstance} />

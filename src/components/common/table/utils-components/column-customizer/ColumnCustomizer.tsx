@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../../../Popover'
 import type { ColumnDef } from '@tanstack/react-table'
-import { GripVerticalIcon, LockIcon, LockKeyholeIcon, LockKeyholeOpenIcon, LockOpenIcon, Settings as SettingIcon, XIcon } from 'lucide-react';
 import Button from '@/components/common/Button';
-import { Checkbox } from '../../../Checkbox';
 
-type ColumnCustomizerField = {
+import CustomizerFieldItem from './CustomizerFieldItem';
+import { SettingsIcon } from 'lucide-react';
+
+export type ColumnCustomizerField = {
     id: string;
     label: string;
     isColumnFreezed?: boolean;
@@ -16,43 +17,6 @@ interface ColumnCustomizerProps<T> {
     frozenColumns: Array<ColumnDef<T>>,
     otherSelectedColumns: Array<ColumnDef<T>>,
     onUpdate: (opts: { frozenColumns: Array<ColumnDef<T>>, otherSelectedColumns: Array<ColumnDef<T>> }) => void
-}
-
-interface SelectCustomizerItemProps {
-    customizerField: ColumnCustomizerField,
-    onRemoveColumn: (customizerField: ColumnCustomizerField) => void,
-    onFreezeStateChange: (customizerField: ColumnCustomizerField) => void,
-}
-
-const SelectCustomizerItem = ({ customizerField, onRemoveColumn, onFreezeStateChange }: SelectCustomizerItemProps) => {
-    const [isMouseHover, setIsMouseHover] = useState(false);
-
-    const onMouseEnter = () => {
-        setIsMouseHover(true)
-    }
-
-    const onMouseLeave = () => {
-        setIsMouseHover(false);
-    }
-    return (
-        <li key={customizerField.id} className='flex items-center gap-0.5' onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-            <div className='hover:cursor-move'>
-                <GripVerticalIcon className='w-4 h-4 shrink-0' />
-            </div>
-            <div className='flex-1 p-2 border border-primary-border mt-1 rounded text-prop flex items-center gap-2'>
-                <span className='flex-1'>{customizerField.label}</span>
-                {isMouseHover && (
-                    <>
-                        {customizerField.isColumnFreezed
-                            ? <Button variant="transparent" className='w-4 h-4 p-0' onClick={() => onFreezeStateChange(customizerField)}> <LockOpenIcon className='w-4 h-4 shrink-0' /></Button>
-                            : <Button variant="transparent" className='w-4 h-4 p-0' onClick={() => onFreezeStateChange(customizerField)}> <LockIcon className='w-4 h-4 shrink-0' /></Button>
-                        }
-                        <Button variant="transparent" className='w-4 h-4 p-0' onClick={() => onRemoveColumn(customizerField)}> <XIcon className='w-4 h-4 shrink-0' /></Button>
-                    </>
-                )}
-            </div>
-        </li>
-    )
 }
 
 const ColumnCustomizer = <T,>({ allColumns, frozenColumns, otherSelectedColumns, onUpdate }: ColumnCustomizerProps<T>) => {
@@ -193,35 +157,51 @@ const ColumnCustomizer = <T,>({ allColumns, frozenColumns, otherSelectedColumns,
         <div className='absolute right-0 z-10 flex items-center justify-center shadow-md bg-card-background rounded hover:bg-card-hover'>
             <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
                 <PopoverTrigger className='w-9 h-9 top-2 cursor-pointer flex justify-center items-center'>
-                    <SettingIcon color='var(--color-icon-primary)' className='w-5 h-5' />
+                    <SettingsIcon color='var(--color-icon-primary)' className='w-5 h-5' />
                 </PopoverTrigger>
-                <PopoverContent align='end' className='-mr-2 w-[450px] p-0'>
+                <PopoverContent align='end' className='-mr-2 w-[300px] p-0'>
                     <div className='flex flex-col text-prop'>
                         {/* header */}
                         <div className='p-4 border-b border-primary-border'>
-                            <h3 className='font-semibold'>Customize columns</h3>
+                            <h3 className='font-semibold'>Add/Remove and reorder columns</h3>
                         </div>
                         <div className='max-h-[300px] flex gap-4'>
                             {/* Search and field list  */}
-                            <div className='flex flex-col w-1/2 border-r border-primary-border'>
-                                <p className='font-medium px-4 py-2'>Add / Remove Columns</p>
+                            <div className='flex flex-col w-full p-2'>
                                 <div className='px-4 py-2'>
                                     <input type="text" placeholder='search column...' className='w-full' />
                                 </div>
-                                <ul className='flex-1 overflow-y-auto px-4'>
+                                
+                                {/* list of fozen columns, */}
+                                <ul>
+
+                                </ul>
+
+                                {/* list of other selected columns */}
+                                <ul>
+
+                                </ul>
+
+                                <div className='flex flex-col gap-2 flex-1 overflow-y-auto px-4 p-2'>
                                     {
                                         allCustomizerFields.map((col) => {
                                             return (
-                                                <li key={col.id} className='py-1 mt-1 text-prop' onClick={() => onColSelectStateChange(col)}>
-                                                    <div className={`flex items-top gap-2 ${col.isColumnFreezed ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-                                                        <Checkbox checked={col.isSelected} disabled={col.isColumnFreezed} className='mt-0.5' />
-                                                        <span className='align-top'>{col.label}</span>
-                                                    </div>
-                                                </li>
+                                                <CustomizerFieldItem 
+                                                    key={col.id}
+                                                    column={ col }
+                                                    onRemoveColumn={ onRemoveColumn }
+                                                    onFreezeStateChange={ onFrozenStateChange }
+                                                />
+                                                // <li key={col.id} className='py-1 mt-1 text-prop' onClick={() => onColSelectStateChange(col)}>
+                                                //     <div className={`flex items-top gap-2 border border-primary-border rounded p-2 ${col.isColumnFreezed ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
+                                                //         <Checkbox checked={col.isSelected} disabled={col.isColumnFreezed} className='mt-0.5' />
+                                                //         <span className='align-top'>{col.label}</span>
+                                                //     </div>
+                                                // </li>
                                             )
                                         })
                                     }
-                                </ul>
+                                </div>
 
                             </div>
                         </div>

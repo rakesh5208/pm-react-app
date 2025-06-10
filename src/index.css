@@ -17,6 +17,7 @@
   
   --popover-background: #fff;
   --color-icon-primary: #3a4655;
+  --color-icon-danger: #800404;
 
   --shadow-table-frozen-left: -4px 0 4px -4px rgba(0, 0, 0, 0.3) inset;
   --shadow-table-frozen-right: 4px 0 4px -4px rgba(0, 0, 0, 0.3) inset;
@@ -46,6 +47,9 @@
   --color-link: var(--link);
 
   --color-primary-border: var(--primary-border);
+  /** icon */
+  --color-icon-primary: var(--color-icon-primary);
+  --color-icon-danger: var(--color-icon-danger);
 
   /* popover */
   --color-popover-background: var(--popover-background);

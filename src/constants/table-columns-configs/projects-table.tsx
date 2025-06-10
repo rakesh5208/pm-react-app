@@ -59,7 +59,6 @@ const config: TableColumnConfig<Project> = {
         },
         {
             name: 'status',
-            header: 'Status',
             accessorKey: 'statusId',
             cell: (props: CellComponentProps<Project, unknown>) => {
                 let value = '--';
