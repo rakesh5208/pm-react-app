@@ -36,7 +36,6 @@ export type TableColumnConfig<T extends RowData>= {
 // table Component types
 export type TableProps<T> = {
     tableColumnConfigs: TableColumnConfig<T>;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     allFormFields: Array<Field>,
     data: Array<T>
 }

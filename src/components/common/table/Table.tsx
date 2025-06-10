@@ -6,7 +6,8 @@ import TableBody from './TableBody';
 import type { SavedColumnConfig, TableProps } from '@/types/table';
 import storage from '@/utils/storage';
 import { getCurrentColumns } from './table-customizer-helper';
-import ColumnCustomizer from './utils-components/ColumnCustomizer';
+import ColumnCustomizerV1 from './utils-components/column-customizer-v1/ColumnCustomizerV1';
+import ColumnCustomizer from './utils-components/column-customizer/ColumnCustomizer';
 
 
 
@@ -107,6 +108,13 @@ const Table = <T,>({ tableColumnConfigs, allFormFields, data }: TableProps<T>) =
 
     return (
         <div className='relative'>
+            {/* <ColumnCustomizerV1 
+                allColumns={allAvailableColumns}
+                frozenColumns = { frozenColumnDefs }
+                otherSelectedColumns={otherSelectedColumnDefs}
+                onUpdate={onColumnUpdate}
+            /> */}
+
             <ColumnCustomizer 
                 allColumns={allAvailableColumns}
                 frozenColumns = { frozenColumnDefs }
