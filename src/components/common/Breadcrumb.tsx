@@ -27,7 +27,7 @@ const Breadcrumb = () => {
     
   return (
     <nav>
-        <ul className='flex gap-2'>
+        <ul className='flex gap-2 p-2'>
         {
             breadcrumbs.map((breadcrumb, index) => {
                 return (<li key={ index } className='text-sm'>

@@ -53,9 +53,11 @@ const ProtectedRoute: React.FC<ProtectRouteProps> = ({ children, customIsAccessi
     // finally render the children
     return (
         <>
-            <Breadcrumb/>
-            <div className='py-4'>
-                {children}
+            <div className='flex flex-col h-full'>
+                <Breadcrumb/>
+                <div className='overflow-auto h-full p-4'>
+                    {children}
+                </div>
             </div>
             
         </>

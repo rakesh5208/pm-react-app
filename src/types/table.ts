@@ -52,3 +52,6 @@ export type TableBodyProps<T> = {
 export interface CellComponentProps<TData, TValue> extends CellContext<TData, TValue> {
   defaultValue?: string;
 }
+
+
+// column-customizer types
