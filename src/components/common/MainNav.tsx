@@ -31,8 +31,8 @@ const MainNav = () => {
         navigate('/login')
     }
     return (
-        <nav className="bg-primary-nav-background">
-            <div className='container mx-auto flex flex-row'>
+        <nav className="bg-card-background">
+            <div className='container mx-auto flex flex-row bg-primary-nav-background'>
                 <ul className="flex-1 flex">
                     {navs.map(nav => (
                         <li key={nav.name} className='px-2 py-4'>

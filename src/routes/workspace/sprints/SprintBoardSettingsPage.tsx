@@ -17,9 +17,19 @@ const tasks = new Array(50).fill(-1).map((_, index) => {
     status: randomStatus
   }
 })
+const heightMap = new Map() ;
+const getRandomHeight = (id) => {
+    const randomHeights = [80, 150, undefined];
+    if(heightMap.has(id))  {
+      return heightMap.get(id);
+    }
+    heightMap.set(id, randomHeights[Math.floor((Math.random() * randomHeights.length))]);
+    return heightMap.get(id);
+}
 
 const DraggableItem = forwardRef<HTMLDivElement, any>((props, ref) => {
   const { style, item,  className, listeners, ...restProps  } = props;
+  
   return (
     <div 
       ref = {ref} 
@@ -30,7 +40,7 @@ const DraggableItem = forwardRef<HTMLDivElement, any>((props, ref) => {
         )}
       {...listeners}
       {...restProps} >
-      <div className="flex flex-col gap-4">
+      <div className={`flex flex-col gap-4 ` } style={{ height: `${getRandomHeight(item.id)}px`}}>
         <h1>{item.title}</h1>
         <div className="flex gap-2">
           <div className="p-2 border border-primary-border rounded">{item.priority}</div>
@@ -55,7 +65,6 @@ const SprintBoardSettingsPage = () => {
               <span>Setting</span>
             </PopoverTrigger>
             <PopoverContent align="end" className="w-[450px] h-[400px] overflow-hidden my-1 border border-primary-border shadow-md rounded bg-card-background flex">
-              {/* <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, sequi quisquam. Rem asperiores dolorem iure hic praesentium obcaecati, necessitatibus inventore deserunt amet laboriosam ab. Laboriosam voluptas similique vitae perferendis veniam!</p> */}
               <div className="w-1/2 overflow-y-auto p-4 h-full">
                 <ul>
                   {
@@ -63,7 +72,9 @@ const SprintBoardSettingsPage = () => {
                       <li className="bg-page-background p-2 mb-2 rounded">
                         <div>
                           <h3 className="semibold">This is item no. {index}</h3>
+
                         </div>
+
                       </li>
                     ))
                   }

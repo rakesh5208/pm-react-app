@@ -1,5 +1,5 @@
 import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent, type DragStartEvent } from '@dnd-kit/core'
-import { SortableContext, sortableKeyboardCoordinates, arrayMove } from '@dnd-kit/sortable';
+import { SortableContext, sortableKeyboardCoordinates, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { restrictToFirstScrollableAncestor, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { useState, type ComponentType } from 'react';
 import SortableItemWrapper from './SortableItemWrapper';
@@ -47,7 +47,7 @@ const DragDropSortable = <T, >( { name, items, onReorder, SortableItemComponent 
         modifiers={[restrictToVerticalAxis, restrictToFirstScrollableAncestor] }
         onDragEnd={handleDragEnd}
         onDragStart={ handleDragStart }>
-        <SortableContext items = {items}>
+        <SortableContext items = {items} strategy={verticalListSortingStrategy}>
             {
                 items.map((item) => {
                     return (
