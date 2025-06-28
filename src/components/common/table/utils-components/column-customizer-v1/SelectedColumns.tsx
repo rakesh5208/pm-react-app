@@ -25,6 +25,7 @@ export const SelectedColumns: React.FC<SelectedColumnsPropType> = ({
     <div className="border-b border-dashed border-primary-border pb-4">
       { title && <h3 className="font-semibold p-2"> {title} </h3> }
       <DragDropSortable<ColumnCustomizerField>
+        dragOverlayStyle = {{padding: '4px', radius: '4px'}}
         items={items} 
         name={name} 
         onReorder={onDropAndSort}
