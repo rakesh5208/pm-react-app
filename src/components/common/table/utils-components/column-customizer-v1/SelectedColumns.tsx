@@ -21,6 +21,28 @@ export const SelectedColumns: React.FC<SelectedColumnsPropType> = ({
 
   const items = useMemo(() => [...columns], [columns]);
 
+    // add as forward ref to make it compatible with dnd-kit, useMemo to avoid re-creation
+    const SortableSelectedColumn = useMemo(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return React.forwardRef<HTMLDivElement, any>((props, ref) => {
+        const { item, style, className, handleProps, listeners, ...restProps } =
+          props;
+        return (
+          <CustomizerFieldItem
+            ref={ref}
+            column={item as ColumnCustomizerField}
+            style={style}
+            className={className}
+            handleProps={handleProps}
+            listeners={listeners}
+            onFreezeStateChange={onFreezeStateChange}
+            onRemoveColumn={onRemoveColumn}
+            {...restProps}
+          />
+        );
+      });
+    }, []);
+
   return (
     <div className="border-b border-dashed border-primary-border pb-4">
       { title && <h3 className="font-semibold p-2"> {title} </h3> }
@@ -29,21 +51,7 @@ export const SelectedColumns: React.FC<SelectedColumnsPropType> = ({
         items={items} 
         name={name} 
         onReorder={onDropAndSort}
-        SortableItemComponent={(props) => {
-          const { item, ref, style, className, listeners, ...restProps } = props;
-          return (
-            <CustomizerFieldItem 
-              ref = {ref}
-              column = {item}
-              style = {style}
-              className = {className}
-              listeners = {listeners}
-              onFreezeStateChange={onFreezeStateChange}
-              onRemoveColumn={onRemoveColumn}
-              {...restProps}
-            /> 
-          );
-        }}/>
+        SortableItemComponent={SortableSelectedColumn}/>
     </div>
   );
 };

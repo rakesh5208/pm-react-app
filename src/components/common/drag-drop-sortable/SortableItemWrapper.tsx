@@ -37,7 +37,6 @@ const SortableItemWrapper = <T,>({
     isDragging
   } = useSortable({ id: item.id, data: item });
 
-  console.log("transform >>", transform, transition);
   const style = {
     transform: CSS.Transform.toString(transform),
     transition

@@ -9,7 +9,6 @@ import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { classNameMerge } from "@/utils/class-name-merge";
 
 interface SelectedColumnBase {
-  id: string;
   column: ColumnCustomizerField;
   style?:CSSProperties;
   className?: string;
@@ -24,7 +23,6 @@ export type SelectedColumnProps = SelectedColumnBase;
 
 
 const SelectedColumn = forwardRef<HTMLDivElement, SelectedColumnProps>(({
-  id,
   column,
   handleProps,
   className,
@@ -44,7 +42,7 @@ const SelectedColumn = forwardRef<HTMLDivElement, SelectedColumnProps>(({
   };
   return (
     <div
-      id={id}
+      id={column.id}
       ref = {ref}
       className={classNameMerge("bg-page-background flex items-center gap-0.5", className)}
       onMouseEnter={onMouseEnter}
@@ -52,7 +50,7 @@ const SelectedColumn = forwardRef<HTMLDivElement, SelectedColumnProps>(({
       style={style}
       {...restProps}
     >
-      <div className="hover:cursor-move">
+      <div className="hover:cursor-move" {...handleProps} {...listeners}>
         <GripVerticalIcon className="w-4 h-4 shrink-0" {...handleProps } {...listeners}/>
       </div>
       <div className="flex-1 p-2 border border-primary-border mt-1 rounded text-prop flex items-center gap-1">
